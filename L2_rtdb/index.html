@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Firebase Autoryzacja</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-6 offset-3 shadow rounded panel">
+                <div id="authHeader" class="row align-items-center text-center header">
+                    <div class="col-6"><span id="loginHeaderBtn" class="active">Zaloguj</span></div>
+                    <div class="col-6"><span id="registerHeaderBtn">Zarejestruj</span></div>
+                </div>
+                <div id="dashboardHeader" class="row align-items-center text-center header">
+                    <div class="col">Dashboard</div>
+                </div>
+                <div id="content">
+                    <div id="messageAlert" class="alert alert-danger" role="alert"></div>
+                    <div id="loginView">
+                        <form>
+                            <div class="form-group">
+                                <label for="loginMailInput">Adres E-mail</label>
+                                <input type="email" class="form-control" id="loginMailInput"
+                                    aria-describedby="emailHelp" placeholder="Podaj adres E-mail">
+                            </div>
+                            <div class="form-group">
+                                <label for="loginPasswordInput">Hasło</label>
+                                <input type="password" class="form-control" id="loginPasswordInput"
+                                    placeholder="Podaj hasło">
+                            </div>
+                            <button type="submit" id="loginBtn" class="btn btn-primary mb-3 animation">Zaloguj</button>
+                        </form>
+                    </div>
+                    <div id="registerView">
+                        <form>
+                            <div class="form-group">
+                                <label for="registerMailInput">Adres E-mail</label>
+                                <input type="email" class="form-control" id="registerMailInput"
+                                    aria-describedby="emailHelp" placeholder="Podaj adres E-mail">
+                            </div>
+                            <div class="form-group">
+                                <label for="registerPasswordInput">Hasło</label>
+                                <input type="password" class="form-control" id="registerPasswordInput"
+                                    placeholder="Podaj hasło">
+                            </div>
+                            <div class="form-group">
+                                <label for="registerRepeatPasswordInput">Powtórz hasło</label>
+                                <input type="password" class="form-control" id="registerRepeatPasswordInput"
+                                    placeholder="Podaj jeszcze raz hasło">
+                            </div>
+                            <button type="submit" id="registerBtn"
+                                class="btn btn-primary mb-3 animation">Zarejestruj</button>
+                        </form>
+                    </div>
+                    <div id="dashboardView">
+                        <div class="d-flex flex-column justify-content-center align-items-center">
+                            <div class="dashboard-item">
+                                <img src="./assets//avatar.png" alt="avatar">
+                            </div>
+                            <div class="dashboard-item">
+                                <span id="user-name">adres email</span>
+                            </div>
+                            <div class="dashboard-item">
+                                <button type="button" id="dashboardSignOutBtn"
+                                    class="btn btn-outline-danger animation">Wyloguj</button>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column justify-content-center align-items-center movies">
+                            <div class="movies-title text-center">Ulubione filmy</div>
+                            <div class="movies-content">
+                                <div class="movie-input">
+                                    <form>
+                                        <div class="form-row">
+                                            <div class="col-6">
+                                                <input type="text" id="movieTitle" class="form-control"
+                                                    placeholder="Tytuł filmu">
+                                            </div>
+                                            <div class="col">
+                                                <select class="custom-select mr-sm-2" id="movieRating">
+                                                    <option value="0" selected disabled>Ocena</option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <button type="button" id="movieAddBtn"
+                                                    class="btn btn-outline-success animation">Dodaj</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <ul id="movieList"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="modal">
+        <div id="editView" class="modal-container shadow-lg">
+            <div class="modal-header">
+                <h5 class="modal-title">Edytuj ulubiony film</h5>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-row">
+                        <div class="col-10">
+                            <input type="text" id="movieTitleEdit" class="form-control" placeholder="Tytuł filmu">
+                        </div>
+                        <div class="col">
+                            <select class="custom-select mr-sm-2" id="movieRatingEdit">
+                                <option value="0" selected disabled>Ocena</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="editCloseBtn" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                <button type="button" id="editConfirmBtn" class="btn btn-primary">Zapisz zmiany</button>
+            </div>
+        </div>
+        <div id="deleteView" class="modal-container shadow-lg">
+            <div class="modal-header">
+                <h5 class="modal-title">Czy na pewno chcesz usunąć film?</h5>
+            </div>
+            <div class="modal-body">
+                <p>Jeśli potwierdzisz film zostanie usunięty bezpowrotnie. Czy jesteś tego pewien?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="deleteCloseBtn" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                <button type="button" id="deleteConfirmBtn" class="btn btn-danger">Usuń</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer shadow-lg">
+        <div class="footer-item">
+            <a href="https://bugajsky.pl/">
+                <img src="https://bugajsky.pl/wp-content/uploads/2018/02/logo.png" class="img-responsive"
+                    alt="bugajsky.pl">
+            </a>
+        </div>
+        <div class="footer-item">
+            <a href="https://bugajsky.pl/2019/08/23/realtime-database-w-firebase/" class="animation">
+                Realtime Database w Firebase
+            </a>
+        </div>
+        <div class="footer-item">
+            <a href="https://firebase.google.com">
+                <img src="https://firebase.google.com/_static/images/firebase/touchicon-180.png" class="img-responsive"
+                    alt="firebase">
+            </a>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.1/firebase-database.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
