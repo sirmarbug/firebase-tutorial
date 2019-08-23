@@ -1,13 +1,13 @@
 class Firebase {
     static setup() {
         const config = {
-            apiKey: "AIzaSyD99vZty67HPl6nye87YrkZnUL3jg4-_SY",
-            authDomain: "mychatapp-e3f36.firebaseapp.com",
-            databaseURL: "https://mychatapp-e3f36.firebaseio.com",
-            projectId: "mychatapp-e3f36",
-            storageBucket: "mychatapp-e3f36.appspot.com",
-            messagingSenderId: "1073126984320",
-            appId: "1:1073126984320:web:fc67e917b31ab3a5"
+            apiKey: "",
+            authDomain: "",
+            databaseURL: "",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: ""
         };
 
         firebase.initializeApp(config);
